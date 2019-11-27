@@ -28,7 +28,6 @@ Or in the 00_Exe folder
 
 ![alt tag](https://user-images.githubusercontent.com/57667417/69445815-dd904680-0d31-11ea-8885-a2c03c968c92.png)
 
-\ 
 ### Developers
 
 This pipeline was developed by Andrade, AAS (aandrade@lncc.br) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO)
