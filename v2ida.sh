@@ -1,6 +1,9 @@
 #!/bin/bash
 
+#### Developed by Andrade, AAS (aandrade@lncc.br) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO)
+
 ###STEP 01 - SETUP AND USER INPUT
+
 ## Set Params via Command Line
 ID_NAMES=$1
 ## The name of a file containing the samples names (without the extension)
