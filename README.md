@@ -35,10 +35,15 @@ Or in the 00_Exe folder
 
 where:
 samples is the name of a .tab file containing the samples names
+
 ref is the reference genome used for alignment (default: fasta format)
+
 1 is the inicial nucleotide for quasispecies reconstruction
+
 10000 is the final nucleotide for quasispecies reconstruction
+
 5 is how many parts you would like to divide the genome for quasispecies reconstruction
+
 
 ### Developers
 
