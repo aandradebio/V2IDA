@@ -29,8 +29,13 @@ Or in the 00_Exe folder
 ![alt tag](https://user-images.githubusercontent.com/57667417/69445815-dd904680-0d31-11ea-8885-a2c03c968c92.png)
 
 \ 
-### Development
+### Developers
 
-This pipeline was developed by Andrade, AAS in the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO)
+This pipeline was developed by Andrade, AAS (aandrade@lncc.br) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO)
+
+ANDRADE, AAS; SOARES, AER; ALMEIDA, LGP; PESTANA, CP; AQUINO, CL; MEDEIROS, MA; VASCONCELOS, ATR. Testing the genomic stability of the Brazilian Yellow Fever vaccine strain using next-generation sequencing data. (IN PRESS)
+
+
+ 
 
 
