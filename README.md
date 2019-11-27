@@ -3,16 +3,11 @@
 
 # Viral Vaccine genetic Diversity Analyzer
 
-This script demonstrates using shell scripting to provide an automatized and user-friendly scientific pipeline to 
-
-
-To this end, a pipeline has been developed to allow researchers at the CGSB to rapidly identify and annotate variants.
-
-
-QuasiRecomb
-Can perform region
+This script demonstrates using shell scripting to provide an automatized and user-friendly scientific pipeline to perform variant calling and quasispecies reconstruction specifically for viral vaccine samples. 
 
 ### List of Tools Used in this Pipeline
+
+[JDK 7](http://jdk7.java.net/)
 
 [BWA](https://github.com/lh3/bwa)
 
@@ -33,19 +28,9 @@ Or in the 00_Exe folder
 
 ![alt tag](https://user-images.githubusercontent.com/57667417/69445815-dd904680-0d31-11ea-8885-a2c03c968c92.png)
 
-
 \ 
-### Walk thourgh
-#### Step 01 - User input
-#### Step 02 - Alignment
-#### Step 03 - Variant Calling
+### Development
 
-The pipeline employs the Genome Analysis Toolkit (GATK) to perform variant calling and is based on the best practices for variant discovery analysis outlined by the Broad Institute. 
+This pipeline was developed by Andrade, AAS in the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO)
 
 
-#### Step 04 - Quasispecies reconstruction
-
-QuasiRecomb
-
-
-### Citation 
