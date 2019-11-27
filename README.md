@@ -28,6 +28,18 @@ Or in the 00_Exe folder
 
 ![alt tag](https://user-images.githubusercontent.com/57667417/69445815-dd904680-0d31-11ea-8885-a2c03c968c92.png)
 
+
+### Usage
+
+./v2ida.sh samples ref 1 10000 5
+
+where:
+samples is the name of a .tab file containing the samples names
+ref is the reference genome used for alignment (default: fasta format)
+1 is the inicial nucleotide for quasispecies reconstruction
+10000 is the final nucleotide for quasispecies reconstruction
+5 is how many parts you would like to divide the genome for quasispecies reconstruction
+
 ### Developers
 
 This pipeline was developed by Andrade, AAS (aandrade@lncc.br) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO)
