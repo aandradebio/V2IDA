@@ -29,6 +29,15 @@ Or in the 00_Exe folder
 ![alt tag](https://user-images.githubusercontent.com/57667417/69445815-dd904680-0d31-11ea-8885-a2c03c968c92.png)
 
 
+
+### Pipeline steps
+
+#### Alignment
+
+#### Variant Calling
+
+#### Quasispecies reconstruction
+
 ### Usage
 
 ./v2ida.sh samples ref 1 10000 5
@@ -47,7 +56,7 @@ ref is the reference genome used for alignment (default: fasta format)
 
 ### Credits
 
-This pipeline was developed by [Andrade, AAS](https://github.com/aandradebio) (aandrade@lncc.br) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO), with contributions from [SOARES, AER](https://github.com/aersoares81).
+This pipeline was developed by [Andrade, AAS](https://github.com/aandradebio) (aandrade@lncc.br) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO), with contributions from [Soares, AER](https://github.com/aersoares81).
 
 ANDRADE, AAS; SOARES, AER; ALMEIDA, LGP; PESTANA, CP; AQUINO, CL; MEDEIROS, MA; VASCONCELOS, ATR. Testing the genomic stability of the Brazilian Yellow Fever vaccine strain using next-generation sequencing data. (IN PRESS)
 
