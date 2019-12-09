@@ -45,9 +45,9 @@ ref is the reference genome used for alignment (default: fasta format)
 5 is how many parts you would like to divide the genome for quasispecies reconstruction
 
 
-### Developers
+### Credits
 
-This pipeline was developed by Andrade, AAS (aandrade@lncc.br) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO)
+This pipeline was developed by Andrade, AAS (aandrade@lncc.br) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO), with contributions from SOARES, AER.
 
 ANDRADE, AAS; SOARES, AER; ALMEIDA, LGP; PESTANA, CP; AQUINO, CL; MEDEIROS, MA; VASCONCELOS, ATR. Testing the genomic stability of the Brazilian Yellow Fever vaccine strain using next-generation sequencing data. (IN PRESS)
 
