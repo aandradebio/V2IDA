@@ -1,20 +1,14 @@
-![alt tag](https://user-images.githubusercontent.com/57667417/84268663-661fda00-aafe-11ea-98c4-abba931a5194.jpg)
+![alt tag](https://user-images.githubusercontent.com/57667417/84274517-599f7f80-ab06-11ea-9ee3-b82e6aa88d75.jpg)
 
 # Viral Vaccine genetic Diversity Analyzer 
 
 This script provides an automatized and user-friendly scientific pipeline to perform variant calling and/or quasispecies reconstruction specifically for viral vaccine samples. It was previously used to establish the relationship among genetic diversity, vaccine stability, and the possible reversion to virulence caused by the presence of SNPs and viral quasispecies in vaccine lots from 17DD vaccine against Yellow Fever.
 
-## Pipeline Overview
-
-<img src="https://user-images.githubusercontent.com/57667417/84268671-68823400-aafe-11ea-8b58-6fa673230e11.jpg" width="580">
-
-## Setup
-
 ### List of Tools Used in this Pipeline
 
 All requirements should be downloaded and installed by the user. 
 
-As default the tools should be in path. As an alternative, the pre compiled files should be in the 00_Exe folder.
+As default the tools should be in path. As an alternative, the pre-compiled files should be in the same folder as the script.
 
 [JDK 7](http://jdk7.java.net/)
 
@@ -28,27 +22,38 @@ As default the tools should be in path. As an alternative, the pre compiled file
 
 [QuasiRecomb](https://github.com/cbg-ethz/QuasiRecomb) v. 1.2
 
+## Pipeline Overview
+
+<img src="https://user-images.githubusercontent.com/57667417/84274511-573d2580-ab06-11ea-9959-ed25f8a5fea2.jpg" width="480">
+
+### Input data
+
+This pipeline requires short-read data and a reference consensus genome as input. 
+To facilitate multi-sample usage, all raw data should be named as follow: ```sample_name-R1.fastq and sample_name-R2.fastq``` for pair-end reads or ```sample_name.fastq``` for single-end reads. 
+
 ### Usage
-
+```
 ./v2ida.sh ID_NAMES REF I F P
-<ul>
-<b>ID_NAMES <b> is the name of a .tab file containing the samples names
+```
+**ID_NAMES** is the name of a ```[.tab](https://github.com/aandradebio/V2IDA/blob/master/samples.tab)``` file containing the sequencing mode (pair-end or single-end) followed by samples names
 
-<b>REF <b> is the reference genome used for alignment (default: fasta format)
+**REF** is the reference genome used for alignment (default: fasta format)
 
-<b>I <b> is the inicial nucleotide for quasispecies reconstruction
+**I** is the inicial nucleotide for quasispecies reconstruction
 
-<b>F <b> is the final nucleotide for quasispecies reconstruction
+**F** is the final nucleotide for quasispecies reconstruction
 
-<b>P <b> is how many parts you would like to divide the genome for quasispecies reconstruction (eg. 1 if you dont want to divide)
-<ul>
+**P** is how many parts you would like to divide the genome for quasispecies reconstruction (eg. 1 if you dont want to divide)
+
 Example: 
-
+```
 ./v2ida.sh sample MN737509 1 10862 5
+```
+In this example, the V2IDA pipeline reads the sample names from the sample.tab file, uses the MN737509.fasta file as reference genome, divides the genome from nucleotide 1 to nucleotide 10.862 in 5 parts. 
 
-In this example, the pipeline reads the sample names from the sample.tab file, uses the MN737509.fasta file as reference genome, divides the genome from nucleotide 1 to nucleotide 10.862 in 5 parts. 
+To costumize the SNP hard-filtering criteria, we suggest the reading of [GATK'S Best Practices](https://gatk.broadinstitute.org/hc/en-us/sections/360007226651-Best-Practices-Workflows). 
 
-Highly customizado. Os filtros são específicos visando amostras de vacinas virais e best practices mas podem ser customizados e associados a outros programas. 
+Once the workflow analysis is finished, it generates multiple files that comprise the general statistics and can be opened in any web browser or text editor.
 
 ## Credits
 
