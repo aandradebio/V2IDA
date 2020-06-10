@@ -21,7 +21,7 @@ This script demonstrates using shell scripting to provide an automatized and use
 
 
 All requirements should be downloaded and installed by the user. 
-As default the tools should be in path.
+As default the tools should be in path or have an alias.
 Or in the 00_Exe folder
 
 ### Overview
