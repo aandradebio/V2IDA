@@ -44,9 +44,9 @@ As default the tools should be in path. As an alternative, the pre-compiled file
 
 **Example:** 
 ```
-./v2ida.sh samples MN737509 1 10862 5
+./v2ida.sh samples MN737509 pair-end 1 10862 5
 ```
-In this example, the V2IDA pipeline reads the sample names from the samples.tab file, uses the MN737509.fasta file as reference genome and divides the genome from nucleotide 1 to nucleotide 10.862 in 5 parts. 
+In this example, the V2IDA pipeline reads the sample names from the samples.tab file, uses the MN737509.fasta file as reference genome, pair-end raw data and divides the genome from nucleotide 1 to nucleotide 10.862 in 5 parts. 
 
 To costumize the SNP hard-filtering criteria, we suggest the reading of [GATK'S Best Practices](https://gatk.broadinstitute.org/hc/en-us/sections/360007226651-Best-Practices-Workflows). 
 
