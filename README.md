@@ -1,50 +1,52 @@
 #### V2IDA
-![alt tag](https://user-images.githubusercontent.com/57667417/84267912-3fad6f00-aafd-11ea-88de-d945095aeb4d.jpg)
+![alt tag](https://user-images.githubusercontent.com/57667417/84268663-661fda00-aafe-11ea-98c4-abba931a5194.jpg)
 
 # Viral Vaccine genetic Diversity Analyzer
 
-This script demonstrates using shell scripting to provide an automatized and user-friendly scientific pipeline to perform variant calling and quasispecies reconstruction specifically for viral vaccine samples. 
+This script provides an automatized and user-friendly scientific pipeline to perform variant calling and/or quasispecies reconstruction specifically for viral vaccine samples. It was previously was used to establish the relationship among genetic diversity, vaccine stability, and the possible reversion to virulence caused by the presence of SNPs and quasispecies in 17DD vaccine lots.
 
 ### List of Tools Used in this Pipeline
 
 [JDK 7](http://jdk7.java.net/)
 
-[BWA](https://github.com/lh3/bwa)
+[BWA](https://github.com/lh3/bwa) v. 
 
-[Samtools](https://github.com/samtools/samtools)
+[Samtools](https://github.com/samtools/samtools) v. 
 
-[Picard](https://github.com/broadinstitute/picard)
+[Picard](https://github.com/broadinstitute/picard) v. 
 
-[GATK](https://github.com/broadinstitute/gatk)
+[GATK](https://github.com/broadinstitute/gatk) v.4
 
-[QuasiRecomb](https://github.com/cbg-ethz/QuasiRecomb)
-
+[QuasiRecomb](https://github.com/cbg-ethz/QuasiRecomb) v. 1.2
 
 All requirements should be downloaded and installed by the user. 
+
 As default the tools should be in path.
-Or in the 00_Exe folder
+
+Or the pre compiled files should be in the 00_Exe folder
 
 ### Overview
 
-![alt tag](https://user-images.githubusercontent.com/57667417/84267928-45a35000-aafd-11ea-9f06-06f3d51181b3.jpg)
+![alt tag](https://user-images.githubusercontent.com/57667417/84268671-68823400-aafe-11ea-8b58-6fa673230e11.jpg)
 
 ### Usage
 
-function usage() {
- var x = "./v2ida.sh samples ref 1 10000 5";
- console.log(x);
-}
+'''
+ ./v2ida.sh ID_NAMES REF I F P
+'''
+
 where:
-samples is the name of a .tab file containing the samples names
+ID_NAMES is the name of a .tab file containing the samples names
 
-ref is the reference genome used for alignment (default: fasta format)
+REF is the reference genome used for alignment (default: fasta format)
 
-1 is the inicial nucleotide for quasispecies reconstruction
+I is the inicial nucleotide for quasispecies reconstruction
 
-10000 is the final nucleotide for quasispecies reconstruction
+F is the final nucleotide for quasispecies reconstruction
 
-5 is how many parts you would like to divide the genome for quasispecies reconstruction
+P is how many parts you would like to divide the genome for quasispecies reconstruction
 
+Highly customizado. Os filtros são específicos visando amostras de vacinas virais e best practices mas podem ser customizados e associados a outros programas. 
 
 ### Credits
 
