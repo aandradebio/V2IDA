@@ -28,17 +28,19 @@ As default the tools should be in path. As an alternative, the pre-compiled file
 
 ### Usage
 ```
-./v2ida.sh ID_NAMES REF I F P
+./v2ida.sh id ref pair-end initial final parts
 ```
-**ID_NAMES** is the name of a [.tab](https://github.com/aandradebio/V2IDA/blob/master/samples.tab) file containing the sequencing mode (pair-end or single-end) in the first line and in the next lines should be the sample name, r1.fastq file and r2.fastq file. 
+**id** is the name of a [.tab](https://github.com/aandradebio/V2IDA/blob/master/samples.tab) file containing sample name, r1.fastq file and r2.fastq file in the same line. Other samples should be placed in the next lines. One sample per line; 
 
-**REF** is the reference genome used for alignment (default: fasta format)
+**ref** is the reference genome used for alignment (default: fasta format)
 
-**I** is the inicial nucleotide for quasispecies reconstruction
+**pair-end** or single-end mode
 
-**F** is the final nucleotide for quasispecies reconstruction
+**initial** is the inicial nucleotide for quasispecies reconstruction
 
-**P** is how many parts you would like to divide the genome for quasispecies reconstruction (eg. 1 if you dont want to divide)
+**final** is the final nucleotide for quasispecies reconstruction
+
+**parts** is how many parts you would like to divide the genome for quasispecies reconstruction (eg. 1 if you dont want to divide)
 
 **Example:** 
 ```
