@@ -6,7 +6,7 @@ This script provides an automatized and user-friendly scientific pipeline to per
 
 ## Pipeline Overview
 
-![alt tag](https://user-images.githubusercontent.com/57667417/84268671-68823400-aafe-11ea-8b58-6fa673230e11.jpg?s=500)
+<img src="https://user-images.githubusercontent.com/57667417/84268671-68823400-aafe-11ea-8b58-6fa673230e11.jpg" width="580">
 
 ## Setup
 
