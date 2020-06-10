@@ -30,7 +30,7 @@ As default the tools should be in path. As an alternative, the pre-compiled file
 ```
 ./v2ida.sh ID_NAMES REF I F P
 ```
-**ID_NAMES** is the name of a [.tab](https://github.com/aandradebio/V2IDA/blob/master/samples.tab) file containing the sequencing mode (pair-end or single-end) followed by the raw data samples names. 
+**ID_NAMES** is the name of a [.tab](https://github.com/aandradebio/V2IDA/blob/master/samples.tab) file containing the sequencing mode (pair-end or single-end) in the first line and in the next lines should be the sample name, r1.fastq file and r2.fastq file. 
 
 **REF** is the reference genome used for alignment (default: fasta format)
 
