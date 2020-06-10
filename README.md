@@ -1,6 +1,6 @@
 <img src="https://user-images.githubusercontent.com/57667417/84274517-599f7f80-ab06-11ea-9ee3-b82e6aa88d75.jpg" width="380">
 
-# Viral Vaccine genetic Diversity Analyzer 
+# Viral Vaccine genetIc Diversity Analyzer 
 
 This script provides an automatized and user-friendly scientific pipeline to perform variant calling and/or quasispecies reconstruction specifically for viral vaccine samples. It was previously used to establish the relationship among genetic diversity, vaccine stability, and the possible reversion to virulence caused by the presence of SNPs and viral quasispecies in vaccine lots from the 17DD strain of Yellow Fever vaccine.
 
