@@ -35,7 +35,7 @@ To facilitate multi-sample usage, all raw data should be named as follow: ```sam
 ```
 ./v2ida.sh ID_NAMES REF I F P
 ```
-**ID_NAMES** is the name of a ```[.tab](https://github.com/aandradebio/V2IDA/blob/master/samples.tab)``` file containing the sequencing mode (pair-end or single-end) followed by samples names
+**ID_NAMES** is the name of a [.tab](https://github.com/aandradebio/V2IDA/blob/master/samples.tab) file containing the sequencing mode (pair-end or single-end) followed by samples names
 
 **REF** is the reference genome used for alignment (default: fasta format)
 
@@ -45,15 +45,18 @@ To facilitate multi-sample usage, all raw data should be named as follow: ```sam
 
 **P** is how many parts you would like to divide the genome for quasispecies reconstruction (eg. 1 if you dont want to divide)
 
-Example: 
+**Example:** 
 ```
-./v2ida.sh sample MN737509 1 10862 5
+./v2ida.sh samples MN737509 1 10862 5
 ```
-In this example, the V2IDA pipeline reads the sample names from the sample.tab file, uses the MN737509.fasta file as reference genome, divides the genome from nucleotide 1 to nucleotide 10.862 in 5 parts. 
+In this example, the V2IDA pipeline reads the sample names from the samples.tab file, uses the MN737509.fasta file as reference genome, divides the genome from nucleotide 1 to nucleotide 10.862 in 5 parts. 
 
 To costumize the SNP hard-filtering criteria, we suggest the reading of [GATK'S Best Practices](https://gatk.broadinstitute.org/hc/en-us/sections/360007226651-Best-Practices-Workflows). 
 
-Once the workflow analysis is finished, it generates multiple files that comprise the general statistics and can be opened in any web browser or text editor.
+Once the V2IDA pipeline analysis is finished, it generates multiple files that comprise the general statistics and can be opened in any web browser or text editor.
+
+Additionally, we suggest the usage of complementary algorithms to perform SNP effect prediction (eg. [SNPeff](https://github.com/pcingola/SnpEff)) and Phylogenetic analysis of reconstructed quasispecies (eg. [Seaview](http://doua.prabi.fr/software/seaview)). 
+
 
 ## Credits
 
