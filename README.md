@@ -1,4 +1,4 @@
-![alt tag](https://user-images.githubusercontent.com/57667417/84274517-599f7f80-ab06-11ea-9ee3-b82e6aa88d75.jpg)
+<img src="https://user-images.githubusercontent.com/57667417/84274517-599f7f80-ab06-11ea-9ee3-b82e6aa88d75.jpg" width="280">
 
 # Viral Vaccine genetic Diversity Analyzer 
 
