@@ -26,16 +26,11 @@ As default the tools should be in path. As an alternative, the pre-compiled file
 
 <img src="https://user-images.githubusercontent.com/57667417/84274511-573d2580-ab06-11ea-9959-ed25f8a5fea2.jpg" width="480">
 
-### Input data
-
-This pipeline requires short-read data and a reference consensus genome as input. 
-To facilitate multi-sample usage, all raw data should be named as follow: ```sample_name-R1.fastq and sample_name-R2.fastq``` for pair-end reads or ```sample_name.fastq``` for single-end reads. 
-
 ### Usage
 ```
 ./v2ida.sh ID_NAMES REF I F P
 ```
-**ID_NAMES** is the name of a [.tab](https://github.com/aandradebio/V2IDA/blob/master/samples.tab) file containing the sequencing mode (pair-end or single-end) followed by samples names
+**ID_NAMES** is the name of a [.tab](https://github.com/aandradebio/V2IDA/blob/master/samples.tab) file containing the sequencing mode (pair-end or single-end) followed by the raw data samples names. 
 
 **REF** is the reference genome used for alignment (default: fasta format)
 
