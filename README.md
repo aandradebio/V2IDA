@@ -12,11 +12,11 @@ As default the tools should be in path. As an alternative, the pre-compiled file
 
 [JDK 7](http://jdk7.java.net/)
 
-[BWA-MEM](https://github.com/lh3/bwa) v. 0.7.17
+[BWA-MEM](https://github.com/lh3/bwa) v. 0.7
 
-[Samtools](https://github.com/samtools/samtools) v. 
+[Samtools](https://github.com/samtools/samtools) v. 1.6
 
-[Picard](https://github.com/broadinstitute/picard) v. 
+[Picard](https://github.com/broadinstitute/picard) v. 1.4
 
 [GATK](https://github.com/broadinstitute/gatk) v.4
 
