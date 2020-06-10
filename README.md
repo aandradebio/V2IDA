@@ -16,7 +16,7 @@ As default the tools should be in path. As an alternative, the pre-compiled file
 
 [Samtools](https://github.com/samtools/samtools) v. 1.6
 
-[Picard](https://github.com/broadinstitute/picard) v. 1.4
+[Picard](https://github.com/broadinstitute/picard) v. 2.21.9
 
 [GATK](https://github.com/broadinstitute/gatk) v.4
 
