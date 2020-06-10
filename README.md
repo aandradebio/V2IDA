@@ -8,7 +8,7 @@ This script provides an automatized and user-friendly scientific pipeline to per
 
 All requirements should be downloaded and installed by the user. 
 
-As default the tools should be in path. As an alternative, the pre-compiled files should be in the same folder as the script.
+As default the tools should be in path. As an alternative, the pre-compiled files should be in the same folder as the V2IDA script.
 
 [JDK 7](http://jdk7.java.net/)
 
