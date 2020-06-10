@@ -1,5 +1,5 @@
 #### V2IDA
-![alt tag](https://user-images.githubusercontent.com/57667417/69444736-bfc1e200-0d2f-11ea-94f4-592adbb3b0ed.jpeg)
+![alt tag](https://user-images.githubusercontent.com/57667417/84267912-3fad6f00-aafd-11ea-88de-d945095aeb4d.jpg)
 
 # Viral Vaccine genetic Diversity Analyzer
 
@@ -26,22 +26,14 @@ Or in the 00_Exe folder
 
 ### Overview
 
-![alt tag](https://user-images.githubusercontent.com/57667417/69445815-dd904680-0d31-11ea-8885-a2c03c968c92.png)
-
-
-
-### Pipeline steps
-
-#### Alignment
-
-#### Variant Calling
-
-#### Quasispecies reconstruction
+![alt tag](https://user-images.githubusercontent.com/57667417/84267928-45a35000-aafd-11ea-9f06-06f3d51181b3.jpg)
 
 ### Usage
 
-./v2ida.sh samples ref 1 10000 5
-
+function usage() {
+ var x = "./v2ida.sh samples ref 1 10000 5";
+ console.log(x);
+}
 where:
 samples is the name of a .tab file containing the samples names
 
