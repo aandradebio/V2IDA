@@ -1,103 +1,138 @@
 #!/bin/bash
 
-#### Developed by Andrade, AAS (aandrade@lncc.br) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO)
-
+# Developed by Andrade, AAS (aandradebio@gmail.com) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO)
+#                                                                           
+#  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.                                         
+#                                                                              
+#  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.                                
+#           
+                                                                                                                                           
 ###STEP 01 - SETUP AND USER INPUT
+## Set Paramters via Command Line
 
-## Set Params via Command Line
-ID_NAMES=$1
+if [ "$1" == "-help" ] ; then
+    echo
+    echo " Usage: ./ `basename $0` id ref pair-end initial final parts"
+    echo
+    echo " id	is the name of a .tab file containing a sample name, r1.fastq file and r2.fastq file in the same line. Other samples should be in the next lines."
+    echo " ref	is the reference genome used for alignment (default: fasta format). Do not input extension, only the name of the file"
+    echo " pair-end or single-end"
+    echo " initial  is the inicial nucleotide for quasispecies reconstruction"
+    echo " final    is the final nucleotide for quasispecies reconstruction"
+    echo " parts    is how many parts you would like to divide the genome for quasispecies reconstruction (eg. 1 if you dont want to divide)" 
+    echo
+    echo " Please visit github.com/aandradebio/V2IDA for more information"
+    echo
+    exit 0
+fi
+
 ## The name of a file containing the samples names (without the extension)
+ID_NAMES=$1
+## Reference genome (default: fasta format)
 R=$2
 REF=$R.fasta
-## Reference genome (default: fasta format)
-GSI=$3
+## Pair-end or Single end alignment mode
+MODE="$3"
 ## Inicial nucleotide for quasispecies reconstruction
-GSF=$4
+GSI=$4
 ## Final nucleotide for quasispecies reconstruction
-PART=$5
+GSF=$5
 ## How many parts you would like to divide the genome (integer number)
-WD="$(pwd)"
+PART=$6
 ## Get the current working directory
-EX=$WD/00_Exe
-#Default: the dependencies should be in path. If not, the executables should be in the 00_Exe folder
+WD="$(pwd)"
+#Default: the dependencies should be in PATH. If not, you can create an alias (eg. alias gatk='/path/to/gatk-package/gatk') or put the pre-compile executables in the Working directory
 
-RD=$WD/01_Raw_Data
-AL=$WD/02_Alignment
-VC=$WD/03_Variant_Calling
-QR=$WD/04_Quasispecies_Reconstruction
-mkdir $AL $VC $QR
+if ! [ -x "$(command -v bwa)" ]; then
+  echo 'Error: Bwa is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v samtools)" ]; then
+  echo 'Error: Samtools is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v ./picard.jar)" ]; then
+  echo 'Error: Picard is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v gatk)" ]; then
+  echo 'Error: GATK4 is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v ./QuasiRecomb.jar)" ]; then
+  echo 'Error: QuasiRecomb is not installed.' >&2
+  exit 1
+fi
+
+AL=$WD/01_Alignment
+VC=$WD/02_Variant_Calling
+QR=$WD/03_Quasispecies_Reconstruction
+if [ ! -d $AL ]; then mkdir $AL; fi
+if [ ! -d $VC ]; then mkdir $VC; fi
+if [ ! -d $QR ]; then mkdir $QR; fi
 
 ## Indexing and creating the dictionary
-$EX/bwa/bwa index $REF
-$EX/samtools/samtools faidx $REF
-java -jar $EX/picard.jar CreateSequenceDictionary R=$REF O=$WD/$R.dict
+INDEX=$WD/$REF.bwt
+if [ ! -f $INDEX ]; then bwa index $REF; fi
+FAI=$WD/$REF.fai
+if [ ! -f $FAI ]; then samtools faidx $REF; fi
+DICT=$WD/$R.dict
+if [ ! -f $DICT ]; then java -jar picard.jar CreateSequenceDictionary R=$REF O=$R.dict; fi
 
 ntd=$(((GSF-GSI)/PART))
 u=$((GSF-ntd))
 
-while read ID;
-	do
-
-###STEP 02 - ALIGNMENT AGAINST A REFERENCE GENOME
+while read ID FWDID REVID; 
+	do 
+	echo "Starting $ID"
 p=1
 f=$GSF
-		echo "Starting ID $ID"
-		$EX/bwa/bwa mem -R '@RG\tID:group1\tSM:ID\tPL:illumina\tLB:lib1\tPU:unit1' $REF $RD/$ID-R1.fastq $RD/$ID-R2.fastq > $AL/aligned_$ID.sam 
-		java -jar $EX/picard.jar SortSam INPUT=$AL/aligned_$ID.sam OUTPUT=$AL/sorted_$ID.bam SORT_ORDER=coordinate 
-		java -jar $EX/picard.jar CollectAlignmentSummaryMetrics R=$REF I=$AL/sorted_$ID.bam O=$AL/alignment_metrics_$ID.txt
-		java -jar $EX/picard.jar CollectInsertSizeMetrics INPUT=$AL/sorted_$ID.bam OUTPUT=$AL/insert_metrics_$ID.txt HISTOGRAM_FILE=$AL/insert_size_histogram_$ID.pdf
-                java -jar $EX/picard.jar MarkDuplicates INPUT=$AL/sorted_$ID.bam OUTPUT=$AL/dedup_$ID.bam METRICS_FILE=$AL/metrics_duplicate_$ID.txt
-                java -jar $EX/picard.jar BuildBamIndex INPUT=$AL/dedup_$ID.bam
-                $EX/samtools/samtools depth $AL/sorted_$ID.bam > $AL/depth_$ID.txt
-		echo "Step 02 - Alignment concluded for $ID"
 
-###STEP 03 - VARIANT CALLING
+## Alignment 
+	if [[ $MODE != "pair-end" ]]; 
+	then 
+		if [ ! -f $AL/aligned_$ID.sam ]; then bwa mem -R "@RG\tID:group1\tSM:ID\tPL:illumina\tLB:lib1\tPU:unit1" $REF $FWID > $AL/aligned_$ID.sam; fi 
+	else 
+		if [ ! -f $AL/aligned_$ID.sam ]; then bwa mem -R "@RG\tID:group1\tSM:ID\tPL:illumina\tLB:lib1\tPU:unit1" $REF $FWID $REVID > $AL/aligned_$ID.sam; fi; fi
+	if [ ! -f $AL/sorted_$ID.bam ]; then java -jar picard.jar SortSam INPUT=$AL/aligned_$ID.sam OUTPUT=$AL/sorted_$ID.bam SORT_ORDER=coordinate; fi
+	if [ ! -f $AL/dedup_$ID.bam ]; then java -jar picard.jar MarkDuplicates INPUT=$AL/sorted_$ID.bam OUTPUT=$AL/dedup_$ID.bam METRICS_FILE=$AL/metrics_duplicate_$ID.txt; fi
+	if [ ! -f $AL/dedup_$ID.bai ]; then samtools index $AL/dedup_$ID.bam; fi
+	if [ ! -f $AL/depth_$ID.txt ]; then samtools depth $AL/dedup_$ID.bam > $AL/depth_$ID.txt; fi
+	echo "Mapping step concluded for $ID"
 
-		java -jar $EX/GenomeAnalysisTK.jar -T RealignerTargetCreator -R $REF -I $AL/dedup_$ID.bam -o $AL/realignment_targets_$ID.list
-                java -jar $EX/GenomeAnalysisTK.jar -T IndelRealigner -R $REF -I $AL/dedup_$ID.bam -targetIntervals $AL/realignment_targets_$ID.list -o $AL/realigned_reads_$ID.bam
-                java -jar $EX/GenomeAnalysisTK.jar -T UnifiedGenotyper -R $REF -I $AL/realigned_reads_$ID.bam -o $VC/raw_variants_$ID.vcf
-                java -jar $EX/GenomeAnalysisTK.jar -T SelectVariants -R $REF -V $VC/raw_variants_$ID.vcf -selectType SNP -o $VC/raw_snps_$ID.vcf
-                java -jar $EX/GenomeAnalysisTK.jar -T SelectVariants -R $REF -V $VC/raw_variants_$ID.vcf -selectType INDEL -o $VC/raw_indels_$ID.vcf
-                java -jar $EX/GenomeAnalysisTK.jar -T VariantFiltration -R $REF -V $VC/raw_snps_$ID.vcf --filterExpression 'QD < 2.0 || FS > 60.0 || MQ < 40.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0 || SOR > 4.0' --filterName "basic_snp_filter" -o $VC/filtered_snps_$ID.vcf
-                java -jar $EX/GenomeAnalysisTK.jar -T VariantFiltration -R $REF -V $VC/raw_indels_$ID.vcf --filterExpression 'QD < 2.0 || FS > 200.0 || ReadPosRankSum < -20.0 || SOR > 10.0' --filterName "basic_indel_filter" -o $VC/filtered_indels_$ID.vcf
-		java -jar $EX/GenomeAnalysisTK.jar -T BaseRecalibrator -R $REF -I $AL/realigned_reads_$ID.bam -knownSites $VC/filtered_snps_$ID.vcf -knownSites $VC/filtered_indels_$ID.vcf -o $VC/recal_data_$ID.table
-                java -jar $EX/GenomeAnalysisTK.jar -T BaseRecalibrator -R $REF -I $AL/realigned_reads_$ID.bam -knownSites $VC/filtered_snps_$ID.vcf -knownSites $VC/filtered_indels_$ID.vcf -BQSR $VC/recal_data_$ID.table -o $VC/post_recal_data_$ID.table
-                java -jar $EX/GenomeAnalysisTK.jar -T PrintReads -R $REF -I $AL/realigned_reads_$ID.bam -BQSR $VC/recal_data_$ID.table -o $AL/recal_reads_$ID.bam
-                java -jar $EX/GenomeAnalysisTK.jar -T UnifiedGenotyper -R $REF -I $AL/recal_reads_$ID.bam -o $VC/raw_variants_recal_$ID.vcf
-                java -jar $EX/GenomeAnalysisTK.jar -T SelectVariants -R $REF -V $VC/raw_variants_recal_$ID.vcf -selectType SNP -o $VC/raw_snps_recal_$ID.vcf
-		java -jar $EX/GenomeAnalysisTK.jar -T SelectVariants -R $REF -V $VC/raw_variants_recal_$ID.vcf -selectType INDEL -o $VC/raw_indels_recal_$ID.vcf
-                java -jar $EX/GenomeAnalysisTK.jar -T VariantFiltration -R $REF -V $VC/raw_snps_recal_$ID.vcf --filterExpression 'QD < 2.0 || FS > 60.0 || MQ < 40.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0 || SOR > 4.0' --filterName "basic_snp_filter" -o $VC/filtered_snps_final_$ID.vcf
-                java -jar $EX/GenomeAnalysisTK.jar -T VariantFiltration -R $REF -V $VC/raw_indels_recal_$ID.vcf --filterExpression 'QD < 2.0 || FS > 200.0 || ReadPosRankSum < -20.0 || SOR > 10.0' --filterName "basic_indel_filter" -o $VC/filtered_indels_final_$ID.vcf
-                echo "Step 03 - Variant Calling concluded for $ID"
+## SNP Calling
 
+	if [ ! -f $VC/raw_variants_$ID.vcf ]; then gatk HaplotypeCaller -R $REF -I $AL/dedup_$ID.bam -O $VC/raw_variants_$ID.vcf; fi
+	if [ ! -f $VC/raw_SNPs_$ID.vcf ]; then gatk SelectVariants -R $REF -V $VC/raw_variants_$ID.vcf --select-type SNP -O $VC/raw_SNPs_$ID.vcf; fi
+	if [ ! -f $VC/filtered_SNPs_$ID.vcf ]; then gatk VariantFiltration -R $REF -V $VC/raw_SNPs_$ID.vcf -O $VC/filtered_SNPs_$ID.vcf --filter-expression "QD < 2.0 && FS > 60.0 && MQ < 40.0 && SOR > 4.0" --filter-name "filter_SNPs"; fi
+	if [ ! -f $VC/bqsr_snps_$ID.vcf ]; then gatk SelectVariants --exclude-filtered -V $VC/filtered_SNPs_$ID.vcf -O $VC/bqsr_snps_$ID.vcf; fi
+	if [ ! -f $VC/raw_indels_$ID.vcf ]; then gatk SelectVariants -R $REF -V $VC/raw_variants_$ID.vcf --select-type INDEL -O $VC/raw_indels_$ID.vcf; fi
+	if [ ! -f $VC/filtered_indels_$ID.vcf ]; then gatk VariantFiltration -R $REF -V $VC/raw_indels_$ID.vcf -O $VC/filtered_indels_$ID.vcf --filter-expression "QD < 0.2 && FS > 200.0 && SOR > 10.0" --filter-name "filter_indels"; fi
+	if [ ! -f $VC/bqsr_indels_$ID.vcf ]; then gatk SelectVariants --exclude-filtered -V $VC/filtered_indels_$ID.vcf -O $VC/bqsr_indels_$ID.vcf; fi
+	if [ ! -f $VC/recal_data_$ID.table ]; then gatk BaseRecalibrator -R $REF -I $AL/sorted_$ID.bam --known-sites $VC/bqsr_snps_$ID.vcf --known-sites $VC/bqsr_indels_$ID.vcf -O $VC/recal_data_$ID.table; fi
+	if [ ! -f $VC/recal_reads_$ID.bam ]; then gatk ApplyBQSR -R $REF -I $AL/sorted_$ID.bam --bqsr $VC/recal_data_$ID.table -O $VC/recal_reads_$ID.bam; fi
+	if [ ! -f $VC/raw_variants_recal_$ID.vcf ]; then gatk HaplotypeCaller -R $REF -I $VC/recal_reads_$ID.bam -O $VC/raw_variants_recal_$ID.vcf; fi
+	if [ ! -f $VC/recal_SNPs_$ID.vcf ]; then gatk SelectVariants -R $REF -V $VC/raw_variants_recal_$ID.vcf --select-type SNP -O $VC/recal_SNPs_$ID.vcf; fi
+	if [ ! -f $VC/final_SNPs_$ID.vcf ]; then gatk VariantFiltration -R $REF -V $VC/recal_SNPs_$ID.vcf -O $VC/final_SNPs_$ID.vcf --filter-expression "QD < 2.0 && FS > 60.0 && MQ < 40.0 && SOR > 4.0" --filter-name "filter_SNPs"; fi
+	if [ ! -f $VC/recal_indels_$ID.vcf ]; then gatk SelectVariants -R $REF -V $VC/raw_variants_recal_$ID.vcf --select-type INDEL -O $VC/recal_indels_$ID.vcf; fi
+	if [ ! -f $VC/final_indels_$ID.vcf ]; then gatk VariantFiltration -R $REF -V $VC/recal_indels_$ID.vcf -O $VC/final_indels_$ID.vcf --filter-expression "QD < 0.2 && FS > 200.0 && SOR > 10.0" --filter-name "filter_indels"; fi
+	echo "SNP calling step concluded for $ID"
 
-###STEP 04 - QUASISPECIES RECONSTRUCTION
+## Quasispecies reconstruction
 
-		while [ $p -le $PART ]; 
-			do
-			##$EX/samtools/samtools index $AL/sorted_$ID.bam
-			##java -jar $EX/QuasiRecomb.jar -i $AL/sorted_$ID.bam -o $QR/$ID/$ID_$u-$f -r $u-$f
-			echo "$u - $f"
-			((f=$u))
-			u=$((u-ntd))
-			((p=$p+1))
-			done
-p=1
-u=$((GSF-ntd))
-f=$GSF
-
-		echo "Step 04 - Quasispecies reconstruction concluded for $ID"
-	done < $ID_NAMES.tab
-
-
-
-
-
-
-
-
-
-
-
-
-
+	while [ $p -le $PART ]; 
+		do
+		if [ ! -f $QR/$ID/$u-$f/quasispecies.fasta ]; then java -jar QuasiRecomb.jar -i $AL/dedup_$ID.bam -o $QR/$ID/$u-$f -noGaps -r $u-$f; fi
+		((f=$u))
+		u=$((u-ntd))
+		((p=$p+1))
+		done
+	p=1
+	u=$((GSF-ntd))
+	f=$GSF
+		echo "Quasispecies reconstruction step concluded for $ID"
+done < $ID_NAMES.tab
