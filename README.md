@@ -57,9 +57,9 @@ Additionally, we suggest the use of complementary algorithms to perform SNP effe
 
 ## Credits
 
-This pipeline was developed by [Andrade, AAS](https://github.com/aandradebio) (aandradebio@gmail.com) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO), with contributions from [Soares, AER](https://github.com/aersoares81) and Vasconcelos, ATR.
+This pipeline was developed by [Andrade, AAS](https://github.com/aandradebio) (aandradebio@gmail.com) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO), with contributions from [Soares, AER](https://github.com/aersoares81), Almeida LGP and Vasconcelos, ATR.
 
-ANDRADE, AAS; SOARES, AER; ALMEIDA, LGP; PESTANA, CP; AQUINO, CL; MEDEIROS, MA; VASCONCELOS, ATR. Testing the genomic stability of the Brazilian Yellow Fever vaccine strain using next-generation sequencing data. (IN PRESS)
+ANDRADE, AAS; SOARES, AER; ALMEIDA, LGP; CIAPINA, LP; PESTANA, CP; AQUINO, CL; MEDEIROS, MA; VASCONCELOS, ATR. Testing the genomic stability of the Brazilian Yellow Fever vaccine strain using next-generation sequencing data. (IN PRESS)
 
 
  
