@@ -59,7 +59,7 @@ Additionally, we suggest the use of complementary algorithms to perform SNP effe
 
 This pipeline was developed by [Andrade, AAS](https://github.com/aandradebio) (aandradebio@gmail.com) at the National Laboratory for Scientific Computing - Bioinformatic Laboratory (LABINFO), with contributions from [Soares, AER](https://github.com/aersoares81), Almeida LGP and Vasconcelos, ATR.
 
-ANDRADE, AAS; SOARES, AER; ALMEIDA, LGP; CIAPINA, LP; PESTANA, CP; AQUINO, CL; MEDEIROS, MA; VASCONCELOS, ATR. Testing the genomic stability of the Brazilian Yellow Fever vaccine strain using next-generation sequencing data. (IN PRESS)
+Andrade AAS, Soares AER, Paula de Almeida LG, Ciapina LP, Pestana CP, Aquino CL, Medeiros MA, Ribeiro de Vasconcelos AT. Testing the genomic stability of the Brazilian yellow fever vaccine strain using next-generation sequencing data. Interface Focus. 2021 Jun 11;11(4):20200063. doi: 10.1098/rsfs.2020.0063. PMID: 34123353; PMCID: PMC8193464.
 
 
  
